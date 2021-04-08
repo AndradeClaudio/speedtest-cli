@@ -1170,9 +1170,7 @@ class Speedtest(object):
             # times = get_attributes_by_tag_name(root, 'times')
             client = get_attributes_by_tag_name(root, 'client')
 
-        ignore_servers = list(
-            map(int, server_config['ignoreids'].split(','))
-        )
+
 
         ratio = int(upload['ratio'])
         upload_max = int(upload['maxchunkcount'])
@@ -1204,7 +1202,6 @@ class Speedtest(object):
 
         self.config.update({
             'client': client,
-            'ignore_servers': ignore_servers,
             'sizes': sizes,
             'counts': counts,
             'threads': threads,
@@ -1320,10 +1317,6 @@ class Speedtest(object):
                         attrib = dict(list(server.attributes.items()))
 
                     if servers and int(attrib.get('id')) not in servers:
-                        continue
-
-                    if (int(attrib.get('id')) in self.config['ignore_servers']
-                            or int(attrib.get('id')) in exclude):
                         continue
 
                     try:
